@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<app name="DefaultGrammar" namespace="PHPAnt\Apps">
+  <file>
+    <name>/home/timing/www/includes/apps/ant-app-default/tests</name>
+    <hash>da39a3ee5e6b4b0d3255bfef95601890afd80709</hash>
+  </file>
+  <file>
+    <name>/home/timing/www/includes/apps/ant-app-default/michael-antapp-public.key</name>
+    <hash>801656e08c261a417314299d8a1603e899f4bfe5</hash>
+  </file>
+  <file>
+    <name>/home/timing/www/includes/apps/ant-app-default/app.php</name>
+    <hash>3ec0993741ae7132e80309be3de2c14f74a051cc</hash>
+  </file>
+  <file>
+    <name>/home/timing/www/includes/apps/ant-app-default/public.key</name>
+    <hash>801656e08c261a417314299d8a1603e899f4bfe5</hash>
+  </file>
+  <action>
+    <hook>cli-load-grammar</hook>
+    <function>loadDefaultGrammar</function>
+    <priority>50</priority>
+    <signature>c448a146a07893c57f2694b6f5b9701e0f19c31a</signature>
+  </action>
+  <action>
+    <hook>cli-init</hook>
+    <function>declareMySelf</function>
+    <priority>50</priority>
+    <signature>53c84e4cc7f4ce458beb0a0f301e669cfbcda139</signature>
+  </action>
+  <action>
+    <hook>cli-command</hook>
+    <function>processCommand</function>
+    <priority>50</priority>
+    <signature>d44f7e3739770a1c297d1468100728eebf94a8da</signature>
+  </action>
+</app>
