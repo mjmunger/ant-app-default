@@ -19,7 +19,7 @@ namespace PHPAnt\Apps;
  * @subpackage   Plugins
  * @category     Default Commands
  * @author       Michael Munger <michael@highpoweredhelp.com>
- */ 
+ */
 
 
 class DefaultGrammar extends \PHPAnt\Core\AntApp implements \PHPAnt\Core\AppInterface  {
@@ -50,19 +50,26 @@ class DefaultGrammar extends \PHPAnt\Core\AntApp implements \PHPAnt\Core\AppInte
      * $pluginDefaultGrammar->addHook('cli-load-grammar','loadDefaultGrammar');
      * </code>
      *
-     * @return array An array of CLI grammar that will be merged with the rest of the grammar. 
+     * @return array An array of CLI grammar that will be merged with the rest of the grammar.
      * @author Michael Munger <michael@highpoweredhelp.com>
      **/
 
     function loadDefaultGrammar() {
         $grammar = [];
+        $grammar = ['errors' => [ 'hide' => NULL
+                                , 'show' => NULL
+                                ]
+                    ];
 
         $grammar['set'] = ['verbosity' => NULL
                           ,'debug' => ['on' => NULL
                                       ,'off' => NULL
                                       ]
+                          ,'visualtrace' => ['on' => NULL
+                                            ,'off' => NULL
+                                            ]
                           ];
-        $grammar['show'] = ['debug' => ['environment' => ['dump' => ['grammar'   => NULL 
+        $grammar['show'] = ['debug' => ['environment' => ['dump' => ['grammar'   => NULL
                                                                     ,'appengine' => NULL
                                                                     ,'plugins'   => NULL
                                                                     ]
@@ -74,12 +81,12 @@ class DefaultGrammar extends \PHPAnt\Core\AntApp implements \PHPAnt\Core\AppInte
                            ,'warranty'  => NULL
                            ];
         $this->loaded = true;
-        
+
         $results['grammar'] = $grammar;
         $results['success'] = true;
         return $results;
     }
-    
+
     /**
      * Callback function that prints to the CLI during cli-init to show this plugin has loaded.
      * Example:
@@ -102,7 +109,7 @@ class DefaultGrammar extends \PHPAnt\Core\AntApp implements \PHPAnt\Core\AppInte
     function debugDump($args) {
         $AE = $args['AE'];
         $cmd = $args['command'];
-        
+
         switch($cmd->getToken(4)) {
             case 'available':
                 var_dump($PE->availablePlugins);
@@ -118,7 +125,7 @@ class DefaultGrammar extends \PHPAnt\Core\AntApp implements \PHPAnt\Core\AppInte
                 break;
             default:
                 break;
-        }     
+        }
     }
 
     function doDebug($args) {
@@ -133,6 +140,17 @@ class DefaultGrammar extends \PHPAnt\Core\AntApp implements \PHPAnt\Core\AppInte
 
     function processCommand($args) {
         $cmd = $args['command'];
+
+        if($cmd->startsWith('errors')) {
+            $state = $cmd->getLastToken();
+            if($state == 'show' || $state == 'hide') $args['AE']->Configs->setConfig('errors', $state);
+        }
+
+        if($cmd->startsWith('set visualtrace')) {
+            $visualTrace = ($cmd->getLastToken() == 'on' ? true : false);
+
+            printf("AppEngine visual trace set to: %s" . PHP_EOL, ( $args['AE']->setVisualTrace($visualTrace) ? "on" : "off"));
+        }
 
         if($cmd->startsWith('show debug')) {
             $this->doDebug($args);
