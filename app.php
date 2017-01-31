@@ -61,6 +61,8 @@ class DefaultGrammar extends \PHPAnt\Core\AntApp implements \PHPAnt\Core\AppInte
                                 ]
                     ];
 
+        $grammar['log'] = ['truncate' => NULL ];
+
         $grammar['set'] = ['verbosity' => NULL
                           ,'debug' => ['on' => NULL
                                       ,'off' => NULL
@@ -166,6 +168,11 @@ class DefaultGrammar extends \PHPAnt\Core\AntApp implements \PHPAnt\Core\AppInte
             $return['test-value'] = 7;
             $return['success']    = true;
             return $return;
+        }
+        
+        if($cmd->is('log truncate')) {
+            $args['AE']->truncateLog();
+            printf("AppEngine log truncated." . PHP_EOL);
         }
 
         return ['success' => true];
