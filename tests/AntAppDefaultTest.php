@@ -39,8 +39,8 @@ class AntAppDefaultTest extends TestCase
 		$this->assertInstanceOf('\PHPAnt\Apps\DefaultGrammar', $D);
 
 		$grammar = $D->loadDefaultGrammar()['grammar'];
-		$this->assertCount(2, $grammar);
-		$this->assertCount(2,$grammar['set']);
+		$this->assertCount(4, $grammar);
+		$this->assertCount(3,$grammar['set']);
 		$this->assertCount(2,$grammar['set']['debug']);
 		$this->assertCount(3,$grammar['show']);
 		$this->assertCount(1,$grammar['show']['debug']);
